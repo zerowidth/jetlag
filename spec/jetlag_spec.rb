@@ -2,7 +2,6 @@ require "spec_helper"
 
 describe Jetlag do
 
-
   before :each do
     @time = Time.parse("2011-04-12 11:30:00 -0600")
   end

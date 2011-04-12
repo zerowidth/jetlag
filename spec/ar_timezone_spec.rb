@@ -27,17 +27,17 @@ context "with Time.zone_default set (i.e. config.time_zone=)" do
         connect_and_define_model
       end
 
-      it "writes bare Time objects to the database in UTC (invalid storage)" do
+      it "writes local Time objects to the database in UTC (invalid storage)" do
         item = @items.create :ts => @time
         item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
       end
 
-      it "writes bare UTC timestamps as UTC (invalid writer)" do
+      it "writes local UTC Time objects as UTC (invalid storage)" do
         item = @items.create :ts => @time.utc
         item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
       end
 
-      it "writes TimeWithZone objects in UTC (invalid storage)" do
+      it "writes TimeWithZone objects using UTC (invalid storage)" do
         item = @items.create :ts => @time.in_time_zone
         item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
       end
@@ -60,7 +60,7 @@ context "with Time.zone_default set (i.e. config.time_zone=)" do
         item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
       end
 
-      it "writes bare UTC timestamps as UTC (invalid writer)" do
+      it "writes bare UTC timestamps as UTC (invalid storage)" do
         item = @items.create :ts => @time.utc
         item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
       end
@@ -111,7 +111,7 @@ context "with Time.zone_default set (i.e. config.time_zone=)" do
 
     end
 
-    context "and time_zone_aware_attributes = false (overridden)" do
+    context "and time_zone_aware_attributes = false" do
       before :all do
         ActiveRecord::Base.time_zone_aware_attributes = false
         connect_and_define_model
@@ -162,7 +162,7 @@ context "with Time.zone_default not set (i.e. config.time_zone is nil)" do
       item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
     end
 
-    it "writes bare UTC timestamps as UTC (invalid writer)" do
+    it "writes bare UTC timestamps as UTC (invalid storage)" do
       item = @items.create :ts => @time.utc
       item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
     end
@@ -179,7 +179,7 @@ context "with Time.zone_default not set (i.e. config.time_zone is nil)" do
       ActiveRecord::Base.default_timezone = :utc
     end
 
-    it "does not write local timestamps as UTC (invalid writer)" do
+    it "does not write local timestamps as UTC (invalid storage)" do
       item = @items.create :ts => @time
       item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
     end
