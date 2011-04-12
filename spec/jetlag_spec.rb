@@ -107,14 +107,14 @@ describe Jetlag do
           item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
         end
 
-        it "writes TimeWithZone objects as UTC (ok)" do
+        it "writes TimeWithZone objects as UTC" do
           item = @items.create :ts => @time
           item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
         end
 
-        it "reads the timestamp as local from UTC (still invalid)" do
+        it "reads the timestamp as local from UTC" do
           item = @items.create :ts => @time
-          item.reload.ts.inspect.should == "2011-04-12 17:30:00 -0600"
+          item.reload.ts.inspect.should == "2011-04-12 11:30:00 -0600"
         end
 
         context "and default_timezone is :utc" do
@@ -177,9 +177,9 @@ describe Jetlag do
           item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
         end
 
-        it "reads local time as UTC (still invalid)" do
+        it "reads time as UTC" do
           item = @items.create :ts => @time
-          item.reload.ts.inspect.should == "2011-04-12 11:30:00 UTC"
+          item.reload.ts.inspect.should == "2011-04-12 17:30:00 UTC"
         end
       end
 
@@ -197,9 +197,9 @@ describe Jetlag do
           item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
         end
 
-        it "reads time as local, with invalid offset (broken)" do
+        it "reads time as local" do
           item = @items.create :ts => @time.utc
-          item.reload.ts.inspect.should == "2011-04-12 17:30:00 -0600"
+          item.reload.ts.inspect.should == "2011-04-12 11:30:00 -0600"
         end
       end
 
