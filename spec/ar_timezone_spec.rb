@@ -7,6 +7,9 @@ context "with Time.zone_default set (i.e. config.time_zone=)" do
     Time.zone_default = Time.__send__(:get_zone, "Mountain Time (US & Canada)")
     ActiveRecord::Base.default_timezone = :utc
     ActiveRecord::Base.time_zone_aware_attributes = true
+
+    # disable jetlag altogether
+    ActiveRecord::Base.database_timezone = nil
   end
 
   before :each do
@@ -154,41 +157,19 @@ context "with Time.zone_default not set (i.e. config.time_zone is nil)" do
 
   context "with default_timezone as :local (default)" do
 
-    context "without timezone aware attributes (default)" do
-
-      it "does not write local timestamps as UTC (ok)" do
-        item = @items.create :ts => @time
-        item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
-      end
-
-      it "writes bare UTC timestamps as UTC (invalid writer)" do
-        item = @items.create :ts => @time.utc
-        item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
-      end
-
-      it "reads the timestamp as local with the correct offset (ok)" do
-        item = @items.create :ts => @time
-        item.reload.ts.inspect.should == "2011-04-12 11:30:00 -0600"
-      end
-
+    it "does not write local timestamps as UTC (ok)" do
+      item = @items.create :ts => @time
+      item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
     end
 
-    context "with timezone aware attributes" do
+    it "writes bare UTC timestamps as UTC (invalid writer)" do
+      item = @items.create :ts => @time.utc
+      item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
+    end
 
-      it "does not write timestamps as UTC (ok)" do
-        item = @items.create :ts => @time
-        item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
-      end
-
-      it "writes bare UTC timestamps as UTC (invalid writer)" do
-        item = @items.create :ts => @time.utc
-        item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
-      end
-
-      it "reads the timestamp as local with the correct offset (ok)" do
-        item = @items.create :ts => @time
-        item.reload.ts.inspect.should == "2011-04-12 11:30:00 -0600"
-      end
+    it "reads the timestamp as local with the correct offset (ok)" do
+      item = @items.create :ts => @time
+      item.reload.ts.inspect.should == "2011-04-12 11:30:00 -0600"
     end
 
   end
@@ -198,41 +179,19 @@ context "with Time.zone_default not set (i.e. config.time_zone is nil)" do
       ActiveRecord::Base.default_timezone = :utc
     end
 
-    context "without timezone aware attributes (default)" do
-
-      it "does not write local timestamps as UTC (invalid writer)" do
-        item = @items.create :ts => @time
-        item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
-      end
-
-      it "writes bare UTC timestamps as UTC (ok)" do
-        item = @items.create :ts => @time.utc
-        item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
-      end
-
-      it "reads the timestamp as UTC with the correct offset (ok)" do
-        item = @items.create :ts => @time
-        item.reload.ts.inspect.should == "2011-04-12 11:30:00 UTC"
-      end
-
+    it "does not write local timestamps as UTC (invalid writer)" do
+      item = @items.create :ts => @time
+      item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
     end
 
-    context "with timezone aware attributes" do
+    it "writes bare UTC timestamps as UTC (ok)" do
+      item = @items.create :ts => @time.utc
+      item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
+    end
 
-      it "does not write timestamps as UTC (invalid storage)" do
-        item = @items.create :ts => @time
-        item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
-      end
-
-      it "writes bare UTC timestamps as UTC (ok)" do
-        item = @items.create :ts => @time.utc
-        item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
-      end
-
-      it "reads the timestamp as UTC with the correct offset (ok)" do
-        item = @items.create :ts => @time
-        item.reload.ts.inspect.should == "2011-04-12 11:30:00 UTC"
-      end
+    it "reads the timestamp as UTC with the correct offset (ok)" do
+      item = @items.create :ts => @time
+      item.reload.ts.inspect.should == "2011-04-12 11:30:00 UTC"
     end
 
   end

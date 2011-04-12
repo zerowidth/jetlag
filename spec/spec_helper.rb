@@ -3,6 +3,8 @@ Bundler.require :default
 
 require "time" # for parse
 
+require "rails/init"
+
 Spec::Runner.configure do |config|
 
   config.before :all do
