@@ -1,9 +1,9 @@
 require "bundler"
-Bundler.require :default
+Bundler.require :default, :development
 
 require "time" # for parse
 
-require "rails/init"
+require "rails/init" # load the plugin
 
 Spec::Runner.configure do |config|
 
