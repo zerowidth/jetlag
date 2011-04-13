@@ -24,6 +24,7 @@ module Jetlag
       cattr_accessor :database_timezone
       self.database_timezone = :utc
     end
+    return
 
     ::ActiveRecord::ConnectionAdapters::AbstractAdapter.module_eval do
       include TimezoneAwareColumnQuoting

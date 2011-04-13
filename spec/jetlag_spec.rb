@@ -6,7 +6,7 @@ describe Jetlag do
     @time = Time.parse("2011-04-12 11:30:00 -0600")
   end
 
-  it "defines a database_timezone class setting on AR::Base" do
+  xit "defines a database_timezone class setting on AR::Base" do
     lambda { ActiveRecord::Base.database_timezone = :utc }.should_not raise_error
   end
 

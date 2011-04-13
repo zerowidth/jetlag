@@ -3,6 +3,7 @@ require "spec_helper"
 describe "basic sanity checks" do
 
   before :all do
+    Time.zone = nil
     connect_and_define_model
   end
 
