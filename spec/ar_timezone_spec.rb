@@ -1,6 +1,6 @@
 require "spec_helper"
 
-context "with Time.zone_default set (i.e. config.time_zone=)" do
+describe "AR with Time.zone_default set (i.e. config.time_zone=)" do
 
   before :all do
     # simulate the initialize_time_zone rails initializer
@@ -142,7 +142,7 @@ context "with Time.zone_default set (i.e. config.time_zone=)" do
 
 end
 
-context "with Time.zone_default not set (i.e. config.time_zone is nil)" do
+describe "AR with Time.zone_default not set (i.e. config.time_zone is nil)" do
   before :all do
     Time.zone_default = nil
     ActiveRecord::Base.default_timezone = :local

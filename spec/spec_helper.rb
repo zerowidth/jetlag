@@ -1,11 +1,12 @@
 require "bundler"
 Bundler.require :default, :development
 
+require "rspec"
 require "time" # for parse
 
 Jetlag.extend_ar
 
-Spec::Runner.configure do |config|
+Rspec.configure do |config|
 
   config.before :all do
     ENV["TZ"] = "US/Mountain"

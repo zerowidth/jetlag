@@ -1,8 +1,7 @@
 require "rubygems"
 require "rake"
-require "spec/rake/spectask"
 
-Spec::Rake::SpecTask.new do |t|
-end
+require "rspec/core/rake_task"
+RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec

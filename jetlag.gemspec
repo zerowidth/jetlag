@@ -12,14 +12,11 @@ Gem::Specification.new do |s|
   s.summary     = %q{ActiveRecord timezone fixes for non-UTC databases}
   s.description = %q{Patches ActiveRecord to fix timezone issues for non-UTC databases and/or non-UTC default timezones}
 
-  s.add_dependency "activerecord", "~> 2.3.11"
+  s.add_dependency "activerecord", "~> 3.0.6"
 
   s.add_development_dependency "sqlite3-ruby"
-  s.add_development_dependency "rspec", "~> 1.3.0"
-  s.add_development_dependency "rspec-rails", "~> 1.3.0"
+  s.add_development_dependency "rspec", "~> 2.5.0"
   s.add_development_dependency "ZenTest"
-  s.add_development_dependency "autotest-growl"
-  s.add_development_dependency "autotest-fsevent"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
