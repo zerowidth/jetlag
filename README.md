@@ -72,6 +72,11 @@ To use in your Rails 2.3.x application (as a plugin):
 
     script/plugin install https://github.com/aniero/jetlag.git
 
+To run manually, e.g. non-rails use of ActiveRecord:
+
+    require "jetlag"
+    Jetlag.extend_ar
+
 To run the specs:
 
     bundle

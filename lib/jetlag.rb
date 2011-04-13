@@ -20,6 +20,8 @@ module Jetlag
   end
 
   def self.extend_ar
+    return if ::ActiveRecord::Base.respond_to?(:database_timezone)
+
     ::ActiveRecord::Base.module_eval do
       cattr_accessor :database_timezone
       self.database_timezone = :utc
