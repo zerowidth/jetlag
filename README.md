@@ -15,6 +15,9 @@ If you would rather the database be treated according to `ENV["TZ"]`, set it to
 `:local`. To disable the patches altogether and return to AR's default
 behavior, set this value to `nil`.
 
+This functionality should be fixed in Rails itself, but until such time, it's
+available here as a plugin.
+
 ## Discussion
 
 The rails convention is to keep all data in UTC. If, however, due to legacy
@@ -58,9 +61,9 @@ correct the invalid behavior.
 
 ## Installation
 
-To use in your Rails 2.3.x application (as a gem plugin):
+To use in your Rails 2.3.x application (as a plugin):
 
-    config.gem "jetlag"
+    script/plugin install https://github.com/aniero/jetlag.git
 
 To run the specs:
 

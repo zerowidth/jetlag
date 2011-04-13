@@ -3,7 +3,7 @@ Bundler.require :default, :development
 
 require "time" # for parse
 
-require "rails/init" # load the plugin
+Jetlag.extend_ar
 
 Spec::Runner.configure do |config|
 

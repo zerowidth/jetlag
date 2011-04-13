@@ -4,6 +4,11 @@ module Jetlag
 
   module TimezoneAwareColumnQuoting
     def quoted_date(value)
+
+      # calling #utc or #localtime on a TimeWithZone will return the
+      # underlying Time. This is desirable because Time#to_s(:db) does
+      # *not* convert to UTC first, unlike TimeWithZone.
+      # The same methods on a Time only change the timezone.
       if ActiveRecord::Base.database_timezone == :utc
         super value.utc
       elsif ActiveRecord::Base.database_timezone == :local
