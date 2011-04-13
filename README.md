@@ -3,6 +3,8 @@
 Patches for ActiveRecord 2.3.x timezone-handling code to allow for non-UTC
 databases.
 
+Rails 3 mostly works, see discussion below.
+
 ## Synopsis
 
 This gem patches ActiveRecord to handle timezones better. It fixes a few
@@ -15,8 +17,12 @@ If you would rather the database be treated according to `ENV["TZ"]`, set it to
 `:local`. To disable the patches altogether and return to AR's default
 behavior, set this value to `nil`.
 
-This functionality should be fixed in Rails itself, but until such time, it's
-available here as a plugin.
+## Rails 3
+
+Rails 3 timezone handling is essentially fixed, as long as you can accept the
+restriction that `Time.zone` can never be anything other than the configured
+`Time.zone_default` (per the initializer, `config.time_zone = ...`). I'm
+willing to live with that for now...
 
 ## Discussion
 
