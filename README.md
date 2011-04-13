@@ -19,10 +19,11 @@ behavior, set this value to `nil`.
 
 ## Rails 3
 
-Rails 3 timezone handling is essentially fixed, as long as you can accept the
-restriction that `Time.zone` can never be anything other than the configured
-`Time.zone_default` (per the initializer, `config.time_zone = ...`). I'm
-willing to live with that for now...
+Rails 3 timezone handling is fixed, especially with the default settings. If
+your database is not in UTC, make sure `ENV["TZ"]` for your rails app is set
+appropriately, and set `ActiveRecord::Base.default_timezone = :local`. For more
+details, see the rails3 branch -- there are specs there showing that the
+behavior is correct, even when changing Time.zone "per request".
 
 ## Discussion
 
