@@ -4,7 +4,7 @@ Bundler.require :default, :development
 require "rspec"
 require "time" # for parse
 
-Jetlag.extend_ar
+# Jetlag.extend_ar
 
 Rspec.configure do |config|
 

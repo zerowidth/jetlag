@@ -32,17 +32,17 @@ describe Jetlag do
 
         it "writes local Time to the database in local time" do
           item = @items.create :ts => @time
-          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
+          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00.000000"
         end
 
         it "writes utc Time to the database in local time" do
           item = @items.create :ts => @time.utc
-          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
+          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00.000000"
         end
 
         it "writes TimeWithZone to the database in local time" do
           item = @items.create :ts => @time.in_time_zone
-          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
+          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00.000000"
         end
 
         it "reads a timestamp as a valid TimeWithZone" do
@@ -61,17 +61,17 @@ describe Jetlag do
 
         it "writes local Time to the database in local time" do
           item = @items.create :ts => @time
-          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
+          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00.000000"
         end
 
         it "writes utc Time to the database in local time" do
           item = @items.create :ts => @time.utc
-          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
+          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00.000000"
         end
 
         it "writes TimeWithZone to the database in local time" do
           item = @items.create :ts => @time.in_time_zone
-          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
+          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00.000000"
         end
 
         it "reads a timestamp as a valid Time" do
@@ -98,17 +98,17 @@ describe Jetlag do
 
         it "writes local Time timestamps as UTC" do
           item = @items.create :ts => @time
-          item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
+          item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00.000000"
         end
 
         it "writes UTC Time as UTC" do
           item = @items.create :ts => @time.utc
-          item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
+          item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00.000000"
         end
 
         it "writes TimeWithZone objects as UTC" do
           item = @items.create :ts => @time
-          item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
+          item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00.000000"
         end
 
         it "reads the timestamp as local from UTC" do
@@ -124,7 +124,7 @@ describe Jetlag do
 
           it "writes local Time as UTC" do
             item = @items.create :ts => @time
-            item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
+            item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00.000000"
           end
 
           it "reads the timestamp as valid UTC" do
@@ -157,7 +157,7 @@ describe Jetlag do
       context "with default_timezone as :local (default)" do
         it "writes UTC time as local" do
           item = @items.create :ts => @time.utc
-          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
+          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00.000000"
         end
 
         it "reads time as local" do
@@ -173,7 +173,7 @@ describe Jetlag do
 
         it "writes local Time as local" do
           item = @items.create :ts => @time
-          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00"
+          item.reload.ts_before_type_cast.should == "2011-04-12 11:30:00.000000"
         end
 
         it "reads time as UTC" do
@@ -193,7 +193,7 @@ describe Jetlag do
       context "with default_timezone as :local (default)" do
         it "writes UTC time as UTC" do
           item = @items.create :ts => @time.utc
-          item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
+          item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00.000000"
         end
 
         it "reads time as local" do
@@ -209,7 +209,7 @@ describe Jetlag do
 
         it "writes local Time as utc" do
           item = @items.create :ts => @time
-          item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00"
+          item.reload.ts_before_type_cast.should == "2011-04-12 17:30:00.000000"
         end
 
         it "reads time as UTC" do
