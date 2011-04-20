@@ -8,8 +8,7 @@ context "with Time.zone_default set (i.e. config.time_zone=)" do
     ActiveRecord::Base.default_timezone = :utc
     ActiveRecord::Base.time_zone_aware_attributes = true
 
-    # disable jetlag altogether
-    ActiveRecord::Base.database_timezone = nil
+    Jetlag.disable
   end
 
   before :each do

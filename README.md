@@ -7,19 +7,21 @@ Rails 3 mostly works, see discussion below.
 
 ## Synopsis
 
-This gem patches ActiveRecord to handle timezones better. It fixes a few
-issues, most notably timezone / offset problems when reading and writing
-non-UTC timestamps to a database.
+This rails plugin patches ActiveRecord to fix the time quoting when timezones
+are involved, especially when using a non-UTC database.
 
-Jetlag adds the `ActiveRecord::Base.database_timezone` configuration option.
-When the Jetlag plugin is first loaded, it automatically sets this to `:utc`.
-If you would rather the database be treated according to `ENV["TZ"]`, set it to
-`:local`. To disable the patches altogether and return to AR's default
-behavior, set this value to `nil`.
+This started as a set of specs to explore the various combinations of
+ActiveRecord and related time zone settings and their effect on timestamp values
+as written and retrieved from a non-timezone-aware database.
+
+The underlying motivation was to figure out the edge cases that exist when a
+database is not running in UTC, and find where the ActiveRecord code fails to
+handle this correctly. Eventually it ended up becoming a patch to correct the
+invalid behavior.
 
 ## Rails 3
 
-Rails 3 timezone handling is fixed, especially with the default settings. If
+Rails 3 timezone handling is correct, especially with the default settings. If
 your database is not in UTC, make sure `ENV["TZ"]` for your rails app is set
 appropriately, and set `ActiveRecord::Base.default_timezone = :local`. For more
 details, see the rails3 branch -- there are specs there showing that the
@@ -28,8 +30,8 @@ behavior is correct, even when changing Time.zone "per request".
 ## Discussion
 
 The rails convention is to keep all data in UTC. If, however, due to legacy
-reasons, your database is *not* UTC, Rails is unable to write or read dates
-with the correct timezone. This can lead to subtle bugs and, essentially,
+reasons, your database is *not* UTC, Rails is unable to write (and thus read)
+dates with the correct timezone. This can lead to subtle bugs and, essentially,
 corrupted data.
 
 ActiveRecord does the incorrect thing in the following cases (copied from spec
@@ -55,16 +57,7 @@ output):
     with Time.zone_default not set (i.e. config.time_zone is nil) with default_timezone as :utc
     - does not write local timestamps as UTC (invalid storage)
 
-
-This project started as a set of specs to explore the various combinations of
-ActiveRecord and related time zone settings and their effect on timestamp
-values as written and retrieved from a non-timezone-aware database. Whew, long
-sentence.
-
-The underlying motivation was to figure out the edge cases that exist when a
-database is not running in UTC, and find where the ActiveRecord code fails to
-handle this correctly. Eventually this ended up becoming a set of patches to
-correct the invalid behavior.
+Jetlag patches AR's column quoting to handle timezones correctly.
 
 ## Installation
 
@@ -72,10 +65,16 @@ To use in your Rails 2.3.x application (as a plugin):
 
     script/plugin install https://github.com/aniero/jetlag.git
 
+If your database is not in UTC, set `ENV["TZ"]` explicitly in your
+`config/environment.rb` to match the database's timezone, and also add the
+following line after `config.time_zone = 'UTC'`:
+
+    config.active_record.default_timezone = :local
+
 To run manually, e.g. non-rails use of ActiveRecord:
 
     require "jetlag"
-    Jetlag.extend_ar
+    Jetlag.enable
 
 To run the specs:
 

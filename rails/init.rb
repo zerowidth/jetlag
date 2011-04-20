@@ -1,2 +1,2 @@
 require "jetlag"
-Jetlag.extend_ar
+Jetlag.enable

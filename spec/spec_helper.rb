@@ -3,7 +3,7 @@ Bundler.require :default, :development
 
 require "time" # for parse
 
-Jetlag.extend_ar
+Jetlag.enable
 
 Spec::Runner.configure do |config|
 
